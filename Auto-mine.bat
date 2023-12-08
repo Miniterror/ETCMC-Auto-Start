@@ -1,7 +1,24 @@
 @echo off
 REM This script kills the ETCMC_GETH.exe process, deletes the myapp.lock file, and starts the ETCMC_GETH with auto-mine option
 
+REM This script checks if there is a new version of the Auto-mine.bat file on GitHub and overwrites the local file if needed
 
+REM Download the remote file and save it as temp.bat
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = \"tls12, tls11, tls\"; Invoke-WebRequest [1](https://github.com/Miniterror/ETCMC-Auto-Start/blob/main/Auto-mine.bat) -OutFile temp.bat"
+
+REM Compare the content of the local and remote files
+fc /b Auto-mine.bat temp.bat > nul
+
+REM If the files are different, overwrite the local file with the remote file and start it again
+if errorlevel 1 (
+  echo New version available
+  del Auto-mine.bat
+  ren temp.bat Auto-mine.bat
+  call Auto-mine.bat
+) else (
+  echo No new version available
+  del temp.bat
+)
 
 REM Kill the ETCMC_GETH.exe process if it is running
 taskkill /f /im ETCMC_GETH.exe > nul 2>&1
