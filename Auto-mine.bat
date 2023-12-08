@@ -2,7 +2,7 @@
 REM This script checks if there is a new version of the Auto-mine.bat file on GitHub and overwrites the local file if needed, will kill ETCMC_GETH.exe when already running and deletes the myapp.lock file if found, after these steps ti will start the ETCMC_GETH client and start mining
 
 REM Download the remote file and save it as temp.bat
-powershell -Command "[Net.ServicePointManager]::SecurityProtocol = \"tls12, tls11, tls\"; Invoke-WebRequest [1](https://github.com/Miniterror/ETCMC-Auto-Start/blob/main/Auto-mine.bat) -OutFile temp.bat"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = \"tls12, tls11, tls\"; Invoke-WebRequest https://github.com/Miniterror/ETCMC-Auto-Start/blob/main/Auto-mine.bat -OutFile temp.bat"
 
 REM Compare the content of the local and remote files
 fc /b Auto-mine.bat temp.bat > nul
